@@ -118,6 +118,16 @@ body {
   display: block;
   stroke: #1b414b;
 }
+.page-header-menu-link {
+  color: #fbfbfb;
+  background-color: rgba(27, 65, 75, 0.5);
+  border-radius: 8px;
+  border: none;
+  padding: 15px 25px;
+  width: 91px;
+  display: block;
+}
+
 /* header-tablet */
 @media screen and (min-width: 768px) {
   .wrapper-page-header {
@@ -150,15 +160,23 @@ body {
     width: 91px;
     display: block;
   }
+  .page-header-menu-link:active,
+  .page-header-menu-link:focus {
+    background-color: #1b414b;
+  }
+  .page-header-social-link:active .icon,
+  .page-header-social-link:focus .icon {
+    fill: #062730;
+  }
   .page-header-social {
     display: flex;
     gap: 8px;
   }
   .page-header-social-list {
-    width: 24px;
-    height: 24px;
+    padding: 2px;
   }
   .page-header-social-list .icon {
+    display: block;
     fill: #1b414b;
   }
   .page-header-social-link {
@@ -199,6 +217,88 @@ body {
   .wrapper-page-header {
     width: 1240px;
   }
+}
+
+/* mobile-menu */
+.mobile-menu {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0e1823;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(100%); /* сховане */
+  transition: transform 500ms ease-in-out;
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0); /* показати */
+}
+
+.mobile-menu-container {
+  position: relative;
+  padding-top: 259px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.mobile-menu-logo-btn {
+  position: absolute;
+  top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fbfbfb;
+  border-radius: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 335px;
+}
+.burger-close-btn {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.burger-close-btn-icon {
+  display: block;
+  fill: #055545;
+}
+.mobile-menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: auto;
+}
+.mobile-menu-nav-link {
+  background-color: rgba(27, 65, 75, 0.5);
+  border-radius: 8px;
+  border: none;
+  padding: 15px 25px;
+  width: 91px;
+  display: block;
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 130%;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fbfbfb;
+}
+.green-link {
+  background-color: #1b414b;
 }
 /* hero-mobile */
 .page-hero {
@@ -258,6 +358,11 @@ body {
   margin: 0 auto;
   display: block;
 }
+.page-hero-button:active,
+.page-hero-button:focus {
+  color: #1b414b;
+  background-color: #fbfbfb;
+}
 
 /* hero-tablet */
 @media screen and (min-width: 768px) {
@@ -297,7 +402,7 @@ body {
     padding: 16px 40px;
   }
 }
-/* header-desctop-1280 */
+/* hero-desctop-1280 */
 @media screen and (min-width: 1280px) {
   .page-hero {
     padding-bottom: 215px;
@@ -343,7 +448,7 @@ body {
     background-color: #fbfbfb;
   }
 }
-/* header-desctop-1440 */
+/* hero-desctop-1440 */
 @media screen and (min-width: 1440px) {
   .page-hero {
     background-image: linear-gradient(
@@ -366,6 +471,7 @@ body {
     }
   }
 }
+
 /* preferences-mobile */
 .page-preferences {
   height: 705px;
@@ -380,7 +486,7 @@ body {
   flex-direction: column;
   position: absolute;
   top: 753px;
-  z-index: 3;
+  z-index: 1;
 }
 .page-preferences-title {
   font-weight: 500;
@@ -412,7 +518,7 @@ body {
   width: 335px;
   height: 395px;
   border-radius: 24px;
-  z-index: 4;
+  z-index: 2;
   position: absolute;
   top: 1133px;
 }
@@ -501,21 +607,27 @@ body {
   margin: 0 auto 40px auto;
   max-width: 319px;
 }
-.yacht-mobile-hidden,
-.yacht-tablet-hidden {
-  display: none;
-}
 .page-models-wrap {
   display: flex;
   justify-content: space-between;
   gap: 32px;
   margin-bottom: 40px;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* Добавьте горизонтальный скролл, если не используете JS */
+  scroll-behavior: smooth; /* Плавная прокрутка */
+  scroll-snap-type: x mandatory;
 }
 .page-models-yacht-card {
   background-color: #fbfbfb;
   border-radius: 24px;
   padding: 16px 16px 32px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 100%; /* Каждый слайд занимает 100% ширины контейнера */
+  width: 100%; /* Задает ширину */
+  scroll-snap-align: start;
 }
+
 .page-models-yacht-card-photo img {
   display: block;
   border-radius: 24px;
@@ -596,13 +708,13 @@ body {
   width: 141px;
   height: 46px;
 }
+.page-models-yacht-card-button:active,
+.page-models-yacht-card-button:focus {
+  color: #1b414b;
+  background-color: #fbfbfb;
+}
 /* models-tabet */
 @media screen and (min-width: 768px) {
-  .yacht-mobile-hidden {
-    display: block;
-    border-radius: 24px;
-    width: 100%;
-  }
   .page-models {
     padding: 150px 0;
   }
@@ -610,6 +722,7 @@ body {
     margin-bottom: 50px;
   }
   .page-models-yacht-card {
+    flex: 0 0 336px; /* Каждый слайд занимает 100% ширины контейнера */
     width: calc((100% - 32px) / 2);
   }
   .page-models-title {
@@ -643,12 +756,19 @@ body {
 }
 /* models-desctop-1280 */
 @media screen and (min-width: 1280px) {
-  .yacht-tablet-hidden {
-    display: block;
-    border-radius: 24px;
-    width: 100%;
+  .carousel-container {
+    overflow: visible;
+  }
+  .page-models-wrap {
+    display: flex; /* Меняем flexbox на блочное расположение (убираем горизонтальный ряд) */
+    overflow-x: visible; /* Убираем горизонтальную прокрутку */
+    scroll-snap-type: none; /* Убираем привязку прокрутки */
+    gap: 25px;
   }
   .page-models-yacht-card {
+    flex-shrink: 1; /* Разрешаем элементам сжиматься/растягиваться */
+    flex-basis: auto; /* Возвращаем стандартное поведение ширины */
+    scroll-snap-align: none; /* Убираем привязку */
     width: calc((100% - 64px) / 3);
   }
   .page-models-yacht-card-button {
@@ -666,6 +786,9 @@ body {
 @media screen and (min-width: 1440px) {
   .page-models {
     padding: 150px 50px;
+  }
+  .page-models-wrap {
+    gap: 32px;
   }
 }
 /* services-mobile */
@@ -934,10 +1057,7 @@ body {
   width: 100%; /* Задает ширину */
   scroll-snap-align: start;
 }
-/* .reviews-card-mobile-hidden,
-.reviews-card-tablet-hidden {
-  display: none;
-} */
+
 .page-reviews-photo {
   display: block;
   border-radius: 72px;
@@ -962,9 +1082,6 @@ body {
 }
 /* reviews-tabet */
 @media screen and (min-width: 768px) {
-  /* .reviews-card-mobile-hidden {
-    display: flex;
-  } */
   .page-reviews {
     padding-top: 150px;
     padding-bottom: 150px;
@@ -981,16 +1098,12 @@ body {
     max-width: 570px;
     margin: 0 auto;
   }
-
   .page-reviews-card {
     flex: 0 0 335px; /* Каждый слайд занимает 100% ширины контейнера */
   }
 }
 /* reviews-desctop-1280 */
 @media screen and (min-width: 1280px) {
-  /* .reviews-card-tablet-hidden {
-    display: flex;
-  } */
   .page-reviews-title {
     max-width: 855px;
     margin: 0 auto 25px auto;
@@ -1067,15 +1180,20 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.page-footer-menu-btn:active,
+.page-footer-menu-btn:focus {
+  background: #fbfbfb;
+  color: #1b414b;
+}
 .page-footer-social {
   display: flex;
   gap: 8px;
 }
 .page-footer-social-list {
-  width: 24px;
-  height: 24px;
+  padding: 2px;
 }
 .page-footer-social-list .icon {
+  display: block;
   fill: #fbfbfb;
 }
 .page-footer-social-link {
@@ -1085,6 +1203,10 @@ body {
   border-radius: 50%;
   width: 100%;
   height: 100%;
+}
+.page-footer-social-link:active .icon,
+.page-footer-social-link:focus .icon {
+  fill: rgba(251, 251, 251, 0.8);
 }
 .page-footer-text {
   font-size: 18px;
@@ -1108,6 +1230,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 /* footer-tablet */
 @media screen and (min-width: 768px) {
   .footer-dopcontainer {
